@@ -1,0 +1,95 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18 Sep, 2016, 1:08:51 PM
+    Author     : Gurjot
+*/
+@import "compass/css3";
+
+div.passage{
+    padding: 25px 0px 0px 0px;
+}
+p.passage{
+    border-left: 6px solid lightgreen;
+    border-right: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    /*                width: 70%;*/
+    text-align: left;
+    /*                margin: auto;*/
+    padding: 20px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.24);
+}
+div.whole{
+    margin-left: 15%;
+    margin-right: 15%;
+    width: 1070px;
+    background-color: #f2f2f2;
+    padding: 10px 15px 15px 15px; 
+    border: 1px solid #dddddd;
+    text-align: left;
+    display: inline-block;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.24);
+}
+form.opt{
+    text-align: left;
+    padding-left: 20px;
+    line-height: 150%;
+}
+p.question{
+    text-align: left;
+}
+input[type="radio"] {
+    display:none;
+}
+input[type="radio"] + label {
+    color: #000;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+}
+input[type="radio"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+    -moz-border-radius:  50%;
+    border-radius:  50%;
+}
+input[type="radio"] + label span {
+    background-color: #d3d3d3;
+}
+input[type="radio"]:checked + label span{
+    background-color: lightgreen;
+}
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+    -webkit-transition:background-color 0.4s linear;
+    -o-transition:background-color 0.4s linear;
+    -moz-transition:background-color 0.4s linear;
+    transition:background-color 0.4s linear;
+}
+input[type=submit] {
+    width: 10%;
+/*    margin-left:30%;*/
+/*    background-color: #4CAF50;*/
+    background-color: lightgreen;
+    color: white;
+    padding: 14px 20px;
+/*    margin: 8px 0;*/
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+/*    background-color: #45a049;*/
+    background-color: #66ff66
+}
+body{
+    background-image:url("images/image (1).jpg");
+    background-size: 1600px 900px;
+}

@@ -1,0 +1,73 @@
+@import url("http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css");
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
+    transition: 0.3s !important;
+   border-radius: 5px !important; /* 5px rounded corners */
+}
+
+/* On mouse-over, add a deeper shadow */
+/*.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2) !important;
+}*/
+
+/* Add some padding inside the card container */
+/*.container {
+    padding: 2px 16px !important;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
+    transition: 0.3s !important;
+ 
+}*/
+
+/* Add rounded corners to the top left and the top right corner of the image */
+
+/* 
+    FORM STYLING
+*/
+#fileselector {
+    margin: 10px; 
+}
+#upload-file-selector {
+    display:none;   
+}
+.margin-correction {
+    margin-right: 10px;   
+}
+
+img {
+    border-radius: 5px 5px 0 0 !important;
+    margin-right: 20px !important;
+}
+img.avatar {
+        margin-top: 5px !important;
+        height: 75px !important;
+        width: 75px !important;
+}
+.row{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  float: center;
+  align-items: center;;
+}
+.btn{
+        margin-top: 13px !important;
+}
+.navbar-nav{
+        margin-right: 50px;
+}
+.profile-image {
+    height: 50px;
+    width: 50px;
+}
+.card-block {
+	background-color: #333;
+	border-radius: 5px 5px 0 0 !important;
+	color: white;
+}
+.panel-body {
+	margin-top: 50px;
+	margin-left: 30px;
+}
