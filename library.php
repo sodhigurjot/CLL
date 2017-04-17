@@ -4,7 +4,7 @@ $_SESSION['conn'] = mysqli_connect('localhost:3306', 'root', 'root', 'cll');
 if($_SESSION['conn']->connect_error){
     die('Error : ('. $_SESSION['conn']->connect_errno .') '. $_SESSION['conn']->connect_error);
 }
-
+#Function to authenticate user id and password
 function check_login($username,$password){
 	
 	$username = mysqli_real_escape_string($_SESSION['conn'], $username);
@@ -23,10 +23,12 @@ function check_login($username,$password){
 	return $column;	
 }
 
+#Function to log out
 function logout(){
 	session_destroy();
 }
 
+#Function to register new user
 function student_register($name,$rollno,$username,$password){
 	$username = mysqli_real_escape_string($_SESSION['conn'], $username);
 	$password = mysqli_real_escape_string($_SESSION['conn'], $password);
@@ -39,4 +41,125 @@ function student_register($name,$rollno,$username,$password){
 		return $_SESSION['conn']->error;
 	}
 }
+
+#Function to get user details from user id
+function get_user_details($user_id){
+	$sql = "SELECT * FROM `student_login_tabl` WHERE `sid` = '".$user_id."' ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = "";
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+#Function to get passages for reading module
+function get_passages($k){
+	$sql = "SELECT `passage` FROM `passage_tabl` WHERE `id`= ".$k." ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = "";
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+#Function to get questions for reading module
+function get_questions($k){
+	$sql = "SELECT * FROM `questions` WHERE `id`=".$k." ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = array();
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function get_all_passages(){
+	$sql = "SELECT * FROM `passage_tabl` ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = array();
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+
+#navbar
+function navbar(){
+	$user_details = get_user_details($_SESSION['sid']);
+	echo '
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-fixed-top">            
+            <a class="navbar-brand" href="index.php">Interactive Language Learning</a>
+            <div class="pull-right" style="margin-left: 65%;">
+                <ul class="nav navbar-nav" style="width: 100%;">
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                            echo $_SESSION['sid'];
+                        echo '</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="studentdashboard.php">Dashboard</a>
+                            <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out"></i> Sign-out</a>
+                        </div>
+                    </li>
+                    <li class="profile-image">                        
+                        <a class="nav-link" href="#">';
+                                if($user_details['image']!=null){ 
+                                    echo '<img src="data:image/jpeg;base64,'.base64_encode( $user_details['image'] ).'" width="50" height="50">';
+                                }else{
+                                    echo '<img class="profile-image" src="pics/avatar.png">';
+                                }
+                        echo '
+                        </a>
+                        
+                    </li>
+                </ul>
+            </div>
+	</nav>';
+}
+
+#function to change the password
+function change_password($Current_Password,$New_Password,$Confirm_Password){
+	echo $sql = "SELECT * FROM `student_login_tabl` WHERE `sid` = '".$_SESSION['sid']."' and `pass` = PASSWORD('".$Current_Password."')";
+	$column = "";
+	$result=mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			if($New_Password == $Confirm_Password){
+				$update_sql = "UPDATE `student_login_tabl` SET `pass` = PASSWORD('".$New_Password."') WHERE `sid` = '".$_SESSION['sid']."' ";
+				if ($_SESSION['conn']->query($update_sql) === TRUE) {
+					header("Location: studentdashboard.php?password_change=success");
+               		exit();
+				} else {
+					return $_SESSION['conn']->error;
+				}
+			}else{
+				header("Location: studentdashboard.php?password_change=failed");
+               	exit();
+			}
+		}
+	}else{
+		header("Location: studentdashboard.php?password_change=curpassincorrect");
+       	exit();
+	}
+	return $column;
+}
+
 ?>
