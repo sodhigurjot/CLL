@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2017 at 06:26 PM
+-- Generation Time: Apr 18, 2017 at 05:33 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -19,6 +19,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `cll`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audio`
+--
+
+CREATE TABLE `audio` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `path` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `audio`
+--
+
+INSERT INTO `audio` (`id`, `name`, `path`) VALUES
+(1, 'A new ice age full.mp3', '\\cll\\audio');
 
 -- --------------------------------------------------------
 
@@ -55,9 +74,8 @@ CREATE TABLE `marks` (
 --
 
 INSERT INTO `marks` (`id`, `sid`, `marks`) VALUES
-(1, 'gssodhi', 6),
-(2, 'sfasfasdf', 0),
-(3, 'atyagi', 0);
+(1, 'gssodhi', 10),
+(2, 'atyagi', 0);
 
 -- --------------------------------------------------------
 
@@ -140,6 +158,12 @@ INSERT INTO `student_login_tabl` (`id`, `rno`, `sid`, `name`, `pass`, `image`) V
 --
 
 --
+-- Indexes for table `audio`
+--
+ALTER TABLE `audio`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `marks`
 --
 ALTER TABLE `marks`
@@ -164,10 +188,15 @@ ALTER TABLE `student_login_tabl`
 --
 
 --
+-- AUTO_INCREMENT for table `audio`
+--
+ALTER TABLE `audio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `marks`
 --
 ALTER TABLE `marks`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `passage_tabl`
 --
@@ -177,7 +206,7 @@ ALTER TABLE `passage_tabl`
 -- AUTO_INCREMENT for table `student_login_tabl`
 --
 ALTER TABLE `student_login_tabl`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
