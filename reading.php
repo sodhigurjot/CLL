@@ -4,6 +4,23 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
     header("Location: index.php");
     exit();   
 }
+
+$k = $_REQUEST["passage"];
+$j = 1;
+$pagePassage = $k;
+$passages = get_passages($k);
+$questions = get_questions($k);
+//print_r($questions);
+if(empty($passages)){
+    header("Location: studentmain.php");
+}
+
+
+if(isset($_POST['passage_submit']) && $_POST['passage_submit']!=''){
+    calculate_passage_marks($_REQUEST['passage'],$_POST['ans1'],$_POST['ans2'],$_POST['ans3']);
+    header("Location: reading.php?passage=".($_REQUEST['passage']+1));
+    exit();
+}
 ?>
 <!DOCTYPE html>
 
@@ -11,19 +28,19 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/passage.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
     </head>
     <body>
         <?php            
-            $k = $_REQUEST["passage"];
-            $j = 1;
-            $pagePassage = $k;
-            $passages = get_passages($k);
-            $questions = get_questions($k);
-            //print_r($questions);
-            if(empty($passages)){
-                header("Location: studentmain.php");
-            }
+            header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+            header("Cache-Control: post-check=0, pre-check=0", false);
+            header("Pragma: no-cache");   
+
+            $user_details = get_user_details($_SESSION['sid']);
+            navbar();
             $i=0;
             $_SESSION["key"] = $k;                
         ?>         
@@ -32,7 +49,7 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
             <div class="passage">
                 <p class="passage"><?php echo $passages['passage']; ?></p>
             </div>
-            <form class="opt" action="calculate_passage_marks.jsp?passage=<%=pagePassage%>" method="POST">
+            <form class="opt" action="" method="POST">
                 <?php 
                     foreach($questions as $questions){
                     $i++;
@@ -45,6 +62,7 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
                     <input class='opt' type="radio" name="ans<?php echo $i; ?>" value="<?php echo $questions['ans4']; ?>" id="radio04<?php echo $i; ?>"><label for="radio04<?php echo $i; ?>"><span></span><?php echo $questions['ans4']; ?></label><br>
                 </p>
                 <?php } ?>
+                <input type="submit" value="Submit" name="passage_submit">
             </form>
         </div>
         <div class="whole">
@@ -62,6 +80,8 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
                 <a href="studentmain.php">Go to main menu</a>
             </div>
         </div>
+        <script src="js/jquery-3.1.1.js" type="text/javascript"></script>        
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     </body>
 </html>
