@@ -8,6 +8,30 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
 if(isset($_POST['change_pass_submit']) && $_POST['change_pass_submit']!=''){
     change_password($_POST['Current_Password'],$_POST['New_Password'],$_POST['Confirm_Password']);
 }
+
+if(isset($_POST['submit_dp']) && $_POST['submit_dp']!=''){
+    //echo 'yesy';
+    //print_r($_FILES['dp']);
+    if($_FILES['dp']['error']=='0'){
+        $image = addslashes(file_get_contents($_FILES['dp']['tmp_name']));
+        //print_r($_FILES['dp']);
+        $imageType = $_FILES['dp']['type'];
+        if($imageType == 'image/jpeg' || $imageType == 'image/png' || $imageType == 'image/gif'){
+            $image_upload = change_profile_picture($image);
+            if($image_upload=='1'){
+                header("Location: studentdashboard.php?change_profile_picture=success");
+                exit();
+            }else{
+                header("Location: studentdashboard.php?change_profile_picture=failed");
+                exit();
+            }
+        }else{
+            header("Location: studentdashboard.php?change_profile_picture=nosupport");
+            exit();
+        }
+        
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,10 +66,21 @@ if(isset($_POST['change_pass_submit']) && $_POST['change_pass_submit']!=''){
                                 $pass_alert=$_REQUEST["password_change"];
                                 if($pass_alert=="failed"){
                                     echo '<div class="alert alert-danger">Password not changed. Password did not match.</div>';
-                                }else if($pass_alert=="success"){
+                                }elseif($pass_alert=="success"){
                                     echo '<div class="alert alert-success">Password successfully changed.</div>';
-                                }else if($pass_alert=="curpassincorrect"){
+                                }elseif($pass_alert=="curpassincorrect"){
                                     echo '<div class="alert alert-danger">Current password incorrect. Try again.</div>';
+                                }
+                            }
+
+                            if(isset($_REQUEST["change_profile_picture"]) && $_REQUEST["change_profile_picture"]!=''){
+                                $change_dp_alert=$_REQUEST["change_profile_picture"];
+                                if($change_dp_alert=="failed"){
+                                    echo '<div class="alert alert-danger">Profile picture not changed. Please try again.</div>';
+                                }elseif($change_dp_alert=="success"){
+                                    echo '<div class="alert alert-success">Profile picture changed successfully.</div>';
+                                }elseif($change_dp_alert=="nosupport"){
+                                    echo '<div class="alert alert-danger">Profile picture not changed. Please use supported image formats. Supported formats are: jpeg, png and gif.</div>';
                                 }
                             }
                         ?>
@@ -108,15 +143,15 @@ if(isset($_POST['change_pass_submit']) && $_POST['change_pass_submit']!=''){
                                 <h5>Change Profile Picture</h5>
                         </div>
                         <div class="row">
-                            <form class="form-inline" action="changedp" method="post" enctype="multipart/form-data">
-                                <div class="col-md-4">
+                            <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <input class="btn" type="file" name="dp" id="dp">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input class="btn btn-primary" type="submit" value="Upload File">
+                                        <input class="btn btn-primary" type="submit" name="submit_dp" value="Upload File">
                                     </div>
                                 </div>
                             </form>

@@ -11,7 +11,7 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Dictionary</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/dictionary.css">        
+        <link rel="stylesheet" href="css/dictionary.css">
         <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
         <style>
             .card-box {
@@ -34,6 +34,12 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
         </style>
     </head>
     <body>
+        <?php           
+            header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+            header("Cache-Control: post-check=0, pre-check=0", false);
+            header("Pragma: no-cache");            
+            $user_details = get_user_details($_SESSION['sid']);
+        ?>
         <div style="text-align:right; margin-right:20%;"><a href="studentmain.php"><i class="fa fa-home" aria-hidden="true">Home</i></a></div>
         <h1 style="text-align: center;">Dictionary</h1>        
         <form method="get" action="">

@@ -34,8 +34,16 @@ function student_register($name,$rollno,$username,$password){
 	$password = mysqli_real_escape_string($_SESSION['conn'], $password);
 	$name = mysqli_real_escape_string($_SESSION['conn'], $name);
 	$rollno = mysqli_real_escape_string($_SESSION['conn'], $rollno);
+	
 	$sql = "INSERT INTO `student_login_tabl` (sid,pass,name,rno) VALUES ('$username',PASSWORD('$password'),'$name','$rollno')";
 	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+
+	$sql1 = "INSERT INTO `marks` (`sid`) VALUES ('".$username."')";
+	if ($_SESSION['conn']->query($sql1) === TRUE) {
 		return '1';
 	} else {
 		return $_SESSION['conn']->error;
@@ -137,7 +145,7 @@ function navbar(){
 
 #function to change the password
 function change_password($Current_Password,$New_Password,$Confirm_Password){
-	echo $sql = "SELECT * FROM `student_login_tabl` WHERE `sid` = '".$_SESSION['sid']."' and `pass` = PASSWORD('".$Current_Password."')";
+	$sql = "SELECT * FROM `student_login_tabl` WHERE `sid` = '".$_SESSION['sid']."' and `pass` = PASSWORD('".$Current_Password."')";
 	$column = "";
 	$result=mysqli_query($_SESSION['conn'],$sql);
 	if(mysqli_num_rows($result)>0){
@@ -162,4 +170,73 @@ function change_password($Current_Password,$New_Password,$Confirm_Password){
 	return $column;
 }
 
+
+#funtion to change profile pic
+function change_profile_picture($image){
+	$sql = "UPDATE `student_login_tabl` SET `image` ='$image' WHERE `sid` = '".$_SESSION['sid']."' ";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+#function to get student's marks
+function get_marks(){
+	$sql = "SELECT `marks` FROM `marks` WHERE `sid` = '".$_SESSION['sid']."' ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row['marks'];
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+#function to calculate marks
+function calculate_passage_marks($passage,$ans1,$ans2,$ans3){
+	$student_marks = get_marks();
+	$ans = array();
+	$ans[] = $ans1;
+	$ans[] = $ans2;
+	$ans[] = $ans3;
+	print_r($ans);
+	for($i=1;$i<=3;$i++){
+		$j = $i;
+		--$j;
+		$sql = "SELECT `ans` FROM `questions` WHERE `q_id` = '".$passage.$i."' ";
+		$result = mysqli_query($_SESSION['conn'],$sql);
+		if(mysqli_num_rows($result)>0){
+			while($row = $result->fetch_assoc()){
+				if($ans[$j] == $row['ans']){
+					$student_marks++;
+				}
+			}
+		}
+	}
+
+	$marks_sql = " UPDATE `marks` SET `marks` ='$student_marks' WHERE `sid` = '".$_SESSION['sid']."' ";
+	if ($_SESSION['conn']->query($marks_sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+#function to get audio details
+function get_audio_details(){
+	$sql = "SELECT * FROM `audio` ";
+	$column = array();
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
 ?>
