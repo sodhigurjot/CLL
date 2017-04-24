@@ -196,17 +196,16 @@ function get_marks(){
 }
 
 #function to calculate marks
-function calculate_passage_marks($passage,$ans1,$ans2,$ans3){
+function calculate_passage_marks($passage,$ans1,$ans2,$ans3,$table_name='questions'){
 	$student_marks = get_marks();
 	$ans = array();
 	$ans[] = $ans1;
 	$ans[] = $ans2;
-	$ans[] = $ans3;
-	print_r($ans);
+	$ans[] = $ans3;	
 	for($i=1;$i<=3;$i++){
 		$j = $i;
 		--$j;
-		$sql = "SELECT `ans` FROM `questions` WHERE `q_id` = '".$passage.$i."' ";
+		$sql = "SELECT `ans` FROM $table_name WHERE `q_id` = '".$passage.$i."' ";
 		$result = mysqli_query($_SESSION['conn'],$sql);
 		if(mysqli_num_rows($result)>0){
 			while($row = $result->fetch_assoc()){
@@ -226,8 +225,12 @@ function calculate_passage_marks($passage,$ans1,$ans2,$ans3){
 }
 
 #function to get audio details
-function get_audio_details(){
+function get_audio_details($audio_id=''){
 	$sql = "SELECT * FROM `audio` ";
+	if($audio_id!=''){
+		$sql.=" WHERE `id`=$audio_id ";
+	}
+	#echo $sql;
 	$column = array();
 	$result = mysqli_query($_SESSION['conn'],$sql);
 	if(mysqli_num_rows($result)>0){
@@ -239,4 +242,19 @@ function get_audio_details(){
 	}
 	return $column;
 }
+
+function get_audio_questions($k){
+	$sql = "SELECT * FROM `audio_questions` WHERE `id`=".$k." ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = array();
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
 ?>
