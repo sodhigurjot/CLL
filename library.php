@@ -257,4 +257,69 @@ function get_audio_questions($k){
 	return $column;
 }
 
+function check_faculty_login($username,$password){
+
+	$username = mysqli_real_escape_string($_SESSION['conn'], $username);
+	$password = mysqli_real_escape_string($_SESSION['conn'], $password);
+	$sql = "SELECT * FROM `faculty_login_tabl` WHERE `fid` = '$username' and `pass` = PASSWORD('$password')";
+	$column = "";
+	$result=mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$_SESSION['fid'] = $row['fid'];
+			$column = $row;
+		}
+	}else{
+		$column = "0";
+	}
+	return $column;	
+}
+
+#Function to get user details from user id
+function get_faculty_details($user_id){
+	$sql = "SELECT * FROM `faculty_login_tabl` WHERE `fid` = '".$user_id."' ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = "";
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function navbar_faculty(){
+	$user_details = get_faculty_details($_SESSION['fid']);
+	echo '
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-fixed-top">            
+            <a class="navbar-brand" href="index.php">Interactive Language Learning</a>
+            <div class="pull-right" style="margin-left: 65%;">
+                <ul class="nav navbar-nav" style="width: 100%;">
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                            echo $_SESSION['fid'];
+                        echo '</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="studentdashboard.php">Dashboard</a>
+                            <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out"></i> Sign-out</a>
+                        </div>
+                    </li>
+                    <li class="profile-image">                        
+                        <a class="nav-link" href="#">';
+                                if($user_details['image']!=null){ 
+                                    echo '<img src="data:image/jpeg;base64,'.base64_encode( $user_details['image'] ).'" width="50" height="50">';
+                                }else{
+                                    echo '<img class="profile-image" src="pics/avatar.png">';
+                                }
+                        echo '
+                        </a>
+                        
+                    </li>
+                </ul>
+            </div>
+	</nav>';
+}
+
 ?>
