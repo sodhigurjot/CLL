@@ -37,7 +37,7 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
                 </div>
                 <div style="margin-left: 20px;">
                     <div class="card" style="">
-                        <a href="listen.php" class="link"> 
+                        <a href="listen.php?audio_id=1" class="link"> 
                             <img src="pics/listen.jpg" alt="" style="width: 20rem; height: 15rem;">
                         </a>
                         <div class="card-block">
