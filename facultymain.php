@@ -27,7 +27,7 @@ if(empty($_SESSION['fid']) || $_SESSION['fid']==''){
             <div class="row">
                 <div style="margin-left: 20px;">
                     <div class="card" style="">
-                        <a href="reading_list.php" class="link">
+                        <a href="passage_list.php" class="link">
                                 <img src="pics/reading.png" alt="" style="width: 20rem; height: 15rem;">
                         </a>
                         <div class="card-block">
