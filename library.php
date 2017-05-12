@@ -322,4 +322,115 @@ function navbar_faculty(){
 	</nav>';
 }
 
+function get_question_for_edit($k){
+	$sql = "SELECT * FROM `questions` WHERE `q_id`=".$k." ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function update_question($q_id,$question,$ans1,$ans2,$ans3,$ans4,$ans){
+	$sql="UPDATE `questions` SET `question` = '$question', `ans1` = '$ans1', `ans2` = '$ans2', `ans3` = '$ans3', `ans4` = '$ans4', `ans` = '$ans' WHERE `q_id` = $q_id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function add_question($id,$q_id,$question,$ans1,$ans2,$ans3,$ans4,$ans){
+	$sql="INSERT INTO `questions` (`question`,`ans1`,`ans2`,`ans3`,`ans4`,`ans`,`id`,`q_id`) VALUES ('$question', '$ans1', '$ans2', '$ans3', '$ans4', '$ans', $id, $q_id)";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+function get_q_id($id){
+
+	$curr_ques_count = count(get_questions($id));
+	$next_question_id = $id.++$curr_ques_count;
+	return $next_question_id;	
+}
+
+function modal_generator($title='delete',$content,$id){
+	echo '
+	<div class="modal fade" id="myModal_'.$id.'" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModal">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  		<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			  	<div class="modal-body">
+			  		<form method="post">
+			  		Are you sure you want to '.$title.' the '.$content.'?
+			  		<input type="hidden" name="modalQuestionID" value="'.$id.'">
+			  	</div>
+			  	<div class="modal-footer">
+				    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				    <button type="submit" class="btn btn-primary" name="modalSubmit">Save changes</button>
+			  	</div>
+			  		</form>
+			</div>
+		</div>
+	</div>';	
+}
+
+function delete_question($q_id){
+	$sql="DELETE FROM `questions` WHERE `q_id` = $q_id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}	
+}
+
+function get_passage_for_edit($k){
+	$sql = "SELECT * FROM `passage_tabl` WHERE `id`=".$k." ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function update_passage($id,$passage){
+	$sql="UPDATE `passage_tabl` SET `passage` = '$passage' WHERE `id` = $id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function add_passage($passage){
+	$sql="INSERT INTO `passage_tabl`(`passage`) VALUES ('$passage')";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function delete_passage($id){
+	$sql="DELETE FROM `passage_tabl` WHERE `id` = $id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}	
+}
 ?>

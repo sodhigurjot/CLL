@@ -6,7 +6,7 @@ if(empty($_SESSION['fid']) || $_SESSION['fid']==''){
 }
 $success_msg = '';
 if(isset($_POST['modalSubmit'])){
-	delete_question($_POST['modalQuestionID']);
+	delete_passage($_POST['modalQuestionID']);
 	$success_msg.= '
 		<div class="alert alert-success">Question successfully deleted.</div>';
 }
@@ -31,9 +31,9 @@ if(isset($_POST['modalSubmit'])){
         ?>	
         <div class="container">
         	<span style="float: right;">
-				<a href="passage_list.php">
-					<i class="fa fa-arrow-left" aria-hidden="true" style="font-size: 20px;">
-						Back
+				<a href="facultymain.php">
+					<i class="fa fa-home" aria-hidden="true" style="font-size: 20px;">
+						Home
 					</i>
 				</a>
 			</span>
@@ -42,43 +42,36 @@ if(isset($_POST['modalSubmit'])){
 				echo $success_msg;
 			?>
 			<h2>
-				Questions
+				Passages
 			</h2>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>Questions</th>
-						<th>Option 1</th>
-						<th>Option 2</th>
-						<th>Option 3</th>
-						<th>Option 4</th>
-						<th>Correct answer</th>
+						<th>
+							Passage
+							<a href="passage_add.php"><i class="fa fa-plus"></i></a>
+						</th>
 						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						$k = $_REQUEST["passage"];
-						$j = 1;
-						$pagePassage = $k;
-						$passages = get_passages($k);
-						$questions = get_questions($k);
-						foreach($questions as $questions){
+						$passages = get_all_passages();
+						foreach($passages as $passages){
 					?>
 					<tr>
-						<td><?php echo $questions['question']; ?></td>
-						<td><?php echo $questions['ans1']; ?></td>
-						<td><?php echo $questions['ans2']; ?></td>
-						<td><?php echo $questions['ans3']; ?></td>
-						<td><?php echo $questions['ans4']; ?></td>
-						<td><?php echo $questions['ans']; ?></td>
+						<td><?php echo $passages['passage']; ?></td>
 						<td>
-							<a href="question_edit?q_id=<?php echo $questions['q_id']; ?>"><i class="fa fa-pencil"></i></a>
+							<a href="reading_list?passage=<?php echo $passages['id']; ?>"><i class="fa fa-question"></i></a>
 							|
 							<?php
-								modal_generator('delete','question',$questions['q_id']);
+								modal_generator('delete','passage',$passages['id']);
 							?>
-							<a href=# data-toggle="modal" data-target="#myModal_<?php echo $questions['q_id']; ?>"><i class="fa fa-times"></i></a>
+							<a href=# data-toggle="modal" data-target="#myModal_<?php echo $passages['id']; ?>"><i class="fa fa-times"></i></a>
+							|
+							<a href="question_add.php?id=<?php echo $passages['id']; ?>" ><i class="fa fa-plus"></i></a>
+							|
+							<a href="passage_edit?id=<?php echo $passages['id']; ?>"><i class="fa fa-pencil"></i></a>
 						</td>
 					</tr>
 					<?php } ?>
