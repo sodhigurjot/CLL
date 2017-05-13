@@ -302,7 +302,6 @@ function navbar_faculty(){
                             echo $_SESSION['fid'];
                         echo '</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="studentdashboard.php">Dashboard</a>
                             <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out"></i> Sign-out</a>
                         </div>
                     </li>
@@ -353,8 +352,11 @@ function add_question($id,$q_id,$question,$ans1,$ans2,$ans3,$ans4,$ans){
 	}
 }
 function get_q_id($id){
-
-	$curr_ques_count = count(get_questions($id));
+	if(get_audio_questions($id)!=0){
+		$curr_ques_count = count(get_questions($id));
+	}else{
+		$curr_ques_count = 0;
+	}
 	$next_question_id = $id.++$curr_ques_count;
 	return $next_question_id;	
 }
@@ -365,7 +367,7 @@ function modal_generator($title='delete',$content,$id){
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="myModal">Modal title</h5>
+					<h5 class="modal-title" id="myModal">Confirm your action.</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				  		<span aria-hidden="true">&times;</span>
 					</button>
@@ -432,5 +434,87 @@ function delete_passage($id){
 	} else {
 		return $_SESSION['conn']->error;
 	}	
+}
+
+function get_all_audio(){
+	$sql = "SELECT * FROM `audio` ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = array();
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function add_audio($audio,$path="\\\cll\\\audio"){
+	$sql="INSERT INTO `audio`(`name`,`path`) VALUES ('$audio','$path')";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function add_audio_question($id,$q_id,$question,$ans1,$ans2,$ans3,$ans4,$ans){
+	$sql="INSERT INTO `audio_questions` (`question`,`ans1`,`ans2`,`ans3`,`ans4`,`ans`,`id`,`q_id`) VALUES ('$question', '$ans1', '$ans2', '$ans3', '$ans4', '$ans', $id, $q_id)";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function get_audio_q_id($id){
+	if(get_audio_questions($id)!=0){
+		$curr_ques_count = count(get_audio_questions($id));
+	}else{
+		$curr_ques_count = 0;
+	}
+	$next_question_id = $id.++$curr_ques_count;
+	return $next_question_id;	
+}
+
+function get_audio_question_for_edit($k){
+	$sql = "SELECT * FROM `audio_questions` WHERE `q_id`=".$k." ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function update_audio_question($q_id,$question,$ans1,$ans2,$ans3,$ans4,$ans){
+	$sql="UPDATE `audio_questions` SET `question` = '$question', `ans1` = '$ans1', `ans2` = '$ans2', `ans3` = '$ans3', `ans4` = '$ans4', `ans` = '$ans' WHERE `q_id` = $q_id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function delete_audio_question($q_id){
+	$sql="DELETE FROM `audio_questions` WHERE `q_id` = $q_id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}	
+}
+
+function delete_audio($id){
+	$sql="DELETE FROM `audio` WHERE `id` = $id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
 }
 ?>
