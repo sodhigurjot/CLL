@@ -20,6 +20,15 @@ if(isset($_POST['modalSubmit'])){
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/DataTables/datatables.min.css"/>
+        <style>
+        	select.form-control:not([size]):not([multiple]){
+        		height: 100% !important;
+        	}
+        	#table_id_wrapper{
+        		display:block !important;
+        	}
+        </style>
     </head>
     <body>
         <?php           
@@ -29,7 +38,7 @@ if(isset($_POST['modalSubmit'])){
             $faculty_details = get_faculty_details($_SESSION['fid']);
             navbar_faculty();
         ?>	
-        <div class="container">
+        <div class="container" style="margin-top: 5% !important;">
         	<span style="float: right;">
 				<a href="facultymain.php">
 					<i class="fa fa-home" aria-hidden="true" style="font-size: 20px;">
@@ -44,7 +53,7 @@ if(isset($_POST['modalSubmit'])){
 			<h2>
 				Passages
 			</h2>
-			<table class="table table-bordered">
+			<table id="table_id" class="table table-bordered display">
 				<thead>
 					<tr>
 						<th>
@@ -82,5 +91,11 @@ if(isset($_POST['modalSubmit'])){
         <script src="js/jquery-3.1.1.js" type="text/javascript"></script>        
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="css/DataTables/datatables.min.js"></script>
+        <script>
+        	$(document).ready( function () {
+			    $('#table_id').DataTable();
+			} );
+        </script>
     </body>
 </html>
