@@ -517,4 +517,31 @@ function delete_audio($id){
 		return $_SESSION['conn']->error;
 	}
 }
+
+function get_video_details($video_id=''){
+	$sql = "SELECT * FROM `interview` ";
+	if($video_id!=''){
+		$sql.=" WHERE `id`=$video_id ";
+	}
+	#echo $sql;
+	$column = array();
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
+
+function add_video($video,$path,$content){
+	$sql="INSERT INTO `interview`(`name`,`path`,`content`) VALUES ('$video','$path','$content')";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
 ?>

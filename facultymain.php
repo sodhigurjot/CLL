@@ -47,27 +47,17 @@ if(empty($_SESSION['fid']) || $_SESSION['fid']==''){
                 </div>
                 <div style="margin-left: 20px;">
                     <div class="card" style="">
-                        <a href=# class="link">
-                            <img src="pics/undefined.png" alt="" style="width: 20rem; height: 15rem;">
+                        <a href="interview_list.php" class="link">
+                            <img src="pics/interview.png" alt="" style="width: 20rem; height: 15rem;">
                         </a>
                         <div class="card-block">
-                            <h4 class="card-title" >Module 3</h4>
+                            <h4 class="card-title" >Interview Video</h4>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div style="margin-left: 20px;">
-                    <div class="card" style="">
-                        <a href=# class="link">
-                            <img src="pics/undefined.png" alt="" style="width: 20rem; height: 15rem;">
-                        </a>
-                        <div class="card-block">
-                            <h4 class="card-title" >Module 4</h4>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-left: 20px;">
+                <div style="margin-left: 175px;">
                     <div class="card" style="">
                         <a href="dictionary.php" class="link">
                             <img src="pics/dictionary.png" alt="" style="width: 20rem; height: 15rem;">

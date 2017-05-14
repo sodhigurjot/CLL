@@ -1,9 +1,5 @@
 <?php
 include('library.php');
-if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
-    header("Location: index.php");
-    exit();   
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,8 +33,7 @@ if(empty($_SESSION['sid']) || $_SESSION['sid']==''){
         <?php           
             header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
             header("Cache-Control: post-check=0, pre-check=0", false);
-            header("Pragma: no-cache");            
-            $user_details = get_user_details($_SESSION['sid']);
+            header("Pragma: no-cache");
         ?>
         <div style="text-align:right; margin-right:20%;"><a href="studentmain.php"><i class="fa fa-home" aria-hidden="true">Home</i></a></div>
         <h1 style="text-align: center;">Dictionary</h1>        
