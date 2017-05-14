@@ -77,7 +77,7 @@ if(isset($_POST['audio_submit']) && $_POST['audio_submit']!=''){
                 for ($i = 1; $i <= $audio_count; $i++) {
                                  
             ?>            
-            <a href="listen.php?audio_id=<?php echo $i; ?>"><input type="button" value="<?php echo $i ?>"></a>
+            <a href="listen.php?audio_id=<?php echo $i; ?>"><input type="button" class="btn btn-secondary" value="<?php echo $i ?>"></a>
             <?php
                 }
             ?>

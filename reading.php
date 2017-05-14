@@ -72,7 +72,7 @@ if(isset($_POST['passage_submit']) && $_POST['passage_submit']!=''){
                 for ($i = 1; $i <= $passage_count; $i++) {
                                  
             ?>            
-            <a href="reading.php?passage=<?php echo $i; ?>"><input type="button" value="<?php echo $i ?>"></a>
+            <a href="reading.php?passage=<?php echo $i; ?>"><input type="button" class="btn btn-secondary" value="<?php echo $i ?>"></a>
             <?php
                 }
             ?>
