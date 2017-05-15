@@ -42,7 +42,7 @@ if(empty($_SESSION['fid']) || $_SESSION['fid']==''){
 			</span>
 			<br>
 			<h2>
-				Listening
+				Student marks
 			</h2>
 			<table id="table_id" class="table table-bordered display">
 				<thead>
