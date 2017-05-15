@@ -69,7 +69,7 @@ if(empty($_SESSION['fid']) || $_SESSION['fid']==''){
                 </div>
                 <div style="margin-left: 20px;">
                     <div class="card" style="">
-                        <a href="mymarks.php" class="link">
+                        <a href="studentsmarks.php" class="link">
                             <img src="pics/marks.jpg" alt="" style="width: 20rem; height: 15rem;">
                         </a>
                         <div class="card-block">

@@ -544,4 +544,27 @@ function add_video($video,$path,$content){
 		return $_SESSION['conn']->error;
 	}
 }
+
+function delete_video($id){
+	$sql="DELETE FROM `interview` WHERE `id` = $id";
+	if ($_SESSION['conn']->query($sql) === TRUE) {
+		return '1';
+	} else {
+		return $_SESSION['conn']->error;
+	}
+}
+
+function get_student_marks(){
+	$sql = "SELECT * FROM `marks` ";
+	$result = mysqli_query($_SESSION['conn'],$sql);
+	$column = array();
+	if(mysqli_num_rows($result)>0){
+		while($row = $result->fetch_assoc()){
+			$column[] = $row;
+		}
+	}else{
+		$column = '0';
+	}
+	return $column;
+}
 ?>

@@ -4,13 +4,6 @@ if(empty($_SESSION['fid']) || $_SESSION['fid']==''){
     header("Location: flogin.php");
     exit();   
 }
-$success_msg = '';
-if(isset($_POST['modalSubmit'])){
-	unlink('D:\wamp64\www'.get_video_details($_POST['modalQuestionID'])[0]['path']."\\".get_video_details($_POST['modalQuestionID'])[0]['name']);
-	delete_video($_POST['modalQuestionID']);
-	$success_msg.= '
-		<div class="alert alert-success">Question successfully deleted.</div>';
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,9 +41,6 @@ if(isset($_POST['modalSubmit'])){
 				</a>
 			</span>
 			<br>
-			<?php
-				echo $success_msg;
-			?>
 			<h2>
 				Listening
 			</h2>
@@ -58,33 +48,25 @@ if(isset($_POST['modalSubmit'])){
 				<thead>
 					<tr>
 						<th>
-							File name
-							<a href="video_add.php"><i class="fa fa-plus"></i></a>
+							Student name
 						</th>
 						<th>
-							File path
+							Roll number
 						</th>
 						<th>
-							Content
+							Marks
 						</th>
-						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						$video_list = get_video_details();
-						foreach($video_list as $video_list){
+						$students = get_student_marks();
+						foreach($students as $students){
 					?>
 					<tr>
-						<td><?php echo $video_list['name']; ?></td>
-						<td><?php echo $video_list['path']; ?></td>
-						<td><?php echo $video_list['content']; ?></td>
-						<td>
-							<?php
-								modal_generator('delete','clip',$video_list['id']);
-							?>
-							<a href=# data-toggle="modal" data-target="#myModal_<?php echo $video_list['id']; ?>"><i class="fa fa-times"></i></a>
-						</td>
+						<td><?php echo get_user_details($students['sid'])['name']; ?> &nbsp;  (<?php echo $students['sid']; ?>)</td>
+						<td><?php echo get_user_details($students['sid'])['rno']; ?></td>
+						<td><?php echo $students['marks']; ?></td>
 					</tr>
 					<?php } ?>
 				</tbody>
