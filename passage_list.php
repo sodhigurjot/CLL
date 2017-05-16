@@ -71,7 +71,7 @@ if(isset($_POST['modalSubmit'])){
 					<tr>
 						<td><?php echo $passages['passage']; ?></td>
 						<td>
-							<a href="reading_list?passage=<?php echo $passages['id']; ?>"><i class="fa fa-question"></i></a>
+							<a href="reading_list.php?passage=<?php echo $passages['id']; ?>"><i class="fa fa-question"></i></a>
 							|
 							<?php
 								modal_generator('delete','passage',$passages['id']);
@@ -80,7 +80,7 @@ if(isset($_POST['modalSubmit'])){
 							|
 							<a href="question_add.php?id=<?php echo $passages['id']; ?>" ><i class="fa fa-plus"></i></a>
 							|
-							<a href="passage_edit?id=<?php echo $passages['id']; ?>"><i class="fa fa-pencil"></i></a>
+							<a href="passage_edit.php?id=<?php echo $passages['id']; ?>"><i class="fa fa-pencil"></i></a>
 						</td>
 					</tr>
 					<?php } ?>

@@ -83,7 +83,7 @@ if(isset($_POST['modalSubmit'])){
 						<td><?php echo $questions['ans4']; ?></td>
 						<td><?php echo $questions['ans']; ?></td>
 						<td>
-							<a href="question_edit?q_id=<?php echo $questions['q_id']; ?>"><i class="fa fa-pencil"></i></a>
+							<a href="question_edit.php?q_id=<?php echo $questions['q_id']; ?>"><i class="fa fa-pencil"></i></a>
 							|
 							<?php
 								modal_generator('delete','question',$questions['q_id']);

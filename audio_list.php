@@ -76,7 +76,7 @@ if(isset($_POST['modalSubmit'])){
 						<td><?php echo $audio_list['name']; ?></td>
 						<td><?php echo $audio_list['path']; ?></td>
 						<td>
-							<a href="audio_questions_list?audio=<?php echo $audio_list['id']; ?>"><i class="fa fa-question"></i></a>
+							<a href="audio_questions_list.php?audio=<?php echo $audio_list['id']; ?>"><i class="fa fa-question"></i></a>
 							|
 							<?php
 								modal_generator('delete','audio',$audio_list['id']);

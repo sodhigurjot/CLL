@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
 				</script>
 
 				<span style="float: right;">
-					<a href="reading_list.php">
+					<a href="passage_list.php">
 						<i class="fa fa-arrow-left" aria-hidden="true" style="font-size: 20px;">
 							Back
 						</i>
